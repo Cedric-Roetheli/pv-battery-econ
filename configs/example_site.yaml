@@ -1,0 +1,39 @@
+energy_prices:
+  import_chf_per_kWh: 0.18
+  grid_chf_per_kWh: 0.00
+  feed_in_chf_per_kWh: 0.09
+
+input_mode: timeseries  # "annual" | "timeseries"
+
+timeseries:
+  consumption_csv: "data/2024_Gesamtverbrauch_RERUE_python.csv"
+  pv_csv:          "data/2024_PV-Produktion_RERUE_python.csv"
+  # Optional – nur falls von Standard abweichend:
+  time_col: 0              # Index oder Spaltenname
+  value_col: 1
+  step_seconds: 900        # 15 min
+  start_datetime: "2024-01-01T00:00:00"   # für Kalender-/TOU-Zuordnung
+  timezone: "Europe/Zurich"
+  decimal: ","             # robust gegen ,/. Mix
+  encoding: "utf-8"
+  fill_missing: 0.0        # oder "ffill" | "interpolate"
+  allow_negative: false    # Datenhygiene
+
+annual_energy:
+  pv_gen_kWh: 66657
+  load_kWh: 55000
+  self_consumption_no_storage_kWh: 19050
+
+storage_effect:
+  evq_with_storage: 0.75
+  improvement_decay_pct_per_year: 0.0   # z.B. 0.01 für 1%/a
+  # delta_ev_abs_kWh: 1500
+  delta_ev_rel: 0.78
+
+economics:
+  capex_battery_chf: 27000
+  capex_installation_chf: 2000
+  opex_annual_chf: 50
+  lifetime_years: 25
+  discount_rate_pct: 3.0
+  subsidy_upfront_chf: 13000 

@@ -1,0 +1,23 @@
+﻿# Python / Build
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtualenv / IDE
+.venv/
+.vscode/
+.idea/
+
+# Lokale Daten & Outputs (mit .gitkeep-Exceptions)
+data/**
+!data/.gitkeep
+reports/**
+!reports/.gitkeep
+
+# Sonstiges
+*.zip
+.DS_Store
+Thumbs.db

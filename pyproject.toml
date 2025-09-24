@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pv-battery-econ"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = ["pandas", "numpy", "pydantic>=2", "pyyaml", "typer>=0.12"]
+
+[project.scripts]
+pvbat = "pv_battery_econ.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

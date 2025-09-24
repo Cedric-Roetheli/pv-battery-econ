@@ -1,0 +1,59 @@
+# --- Eingabeart: 15-Min-Lastgänge / 1-H-Lastgänge ----------------------------
+input_mode: timeseries
+
+timeseries:
+  consumption_csv: "data/11-09-2025_HOUR_pv_battery_econ_Philippe_Verbrauch.csv"  # Sekunden, kWh/Intervall
+  pv_csv:          "data/11-09-2025_HOUR_pv_battery_econ_Philippe_Produktion.csv"     # Sekunden, kWh/Intervall
+  step_seconds: 3600
+  start_datetime: "2024-01-01T00:00:00"
+  tz: "Europe/Zurich"
+
+# --- Speicher-Setup ----------------------------------------------------------
+storage:
+  # 'simulate' = Batterie-Dispatch aus Profilen
+  # 'manual'   = EV-Steigerung manuell vorgeben 
+  mode: simulate
+
+  simulate:
+    capacity_kwh: 10
+    p_charge_kw: 9
+    p_discharge_kw: 9
+    roundtrip_eff: 0.92
+    soc_min: 0.05
+    soc_max: 0.95
+    soc0: 0.05
+
+  manual:
+    # Genau eine der drei Optionen setzen (nur wenn mode=manual)
+    delta_ev_abs_kwh: null        # z.B. 12000
+    delta_ev_rel: null            # z.B. 0.2  (20 %)
+    evq_with_storage: null        # z.B. 0.55
+
+# --- Preise (tolerante Keys; hier wie in deinem example_site.yaml) ----------
+energy_prices:
+  import_chf_per_kWh: 0.2488
+  grid_chf_per_kWh:   0.00
+  feed_in_chf_per_kWh: 0.08
+
+# --- Cap (weil nur erste 30 kWp leistung bei Einspeisung vergütet wird) ---------------
+remuneration:
+  paid_feed_in_cap_kW: 30.0   # Vergütete Kappe in kW (z. B. 30 kW)
+  apply_to_economics: false    # Wenn true, rechnen wir Jahr-1-Benefit mit Kappe
+
+# --- Ökonomie (tolerante Keys) ----------------------------------------------
+economics:
+  capex_battery_chf:       4366.327
+  capex_installation_chf:   1341.35
+  opex_annual_chf:            0
+  lifetime_years:             20
+  discount_rate_pct:         1
+  subsidy_upfront_chf:    0
+
+# --- Optional: Performance-Degradation/Jahr -------------------------------
+storage_effect:
+  improvement_decay_pct_per_year: 0.0
+
+report:
+  enabled: true
+  output_html: "reports/site_2024.html"
+  timeseries_csv: "reports/site_2024_timeseries.csv"
